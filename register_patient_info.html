@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <title>تسجيل بيانات المريض</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <br>
+      <table border="0" width="100%">
+        <tr>
+          <td align="right" dir="rtl">
+            <h7>قسم الجراحة</h7>
+            <br/>
+            <h7>مستشفى هيئة قناة السويس</h7>
+          </td>
+
+          <td align="left">
+            <img src="SUEZ_CANAL_authority.jpg" height="50" width="75" align="left" dir="ltr" start="left"/>
+          </td>
+        </tr>
+      </table>
+
+      <br>
+      <center><b><h4 class="text-center">تسجيل بيانات المريض</h4></b></center>
+      <br>
+      <table width="100%">
+        <tr>
+          <td>
+            <form>
+                <div class="form-group">
+                  <label for="patientName">اسم المريض بالكامل</label>
+                  <center><input type="text" class="form-control" id="txtPatientName"></center>
+                </div>
+            </form>
+          </td>
+
+          <td class="blank_column"></td>
+
+          <td>
+            <form>
+                <div class="form-group">
+                  <label for="patientSex">الجنس</label> <br>
+                    <select id="patientSexSelect" width="100%">
+                      <option value="male">ذكر</option>
+                      <option value="female">أنثى</option>
+                    </select>
+                </div>
+            </form>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <form>
+                <div class="form-group">
+                  <label for="patientBirthDate">تاريخ الميلاد</label>
+                  <center><input type="date" class="form-control" id="datePatientBirthDate"></center>
+                </div>
+            </form>
+          </td>
+
+          <td class="blank_column"></td>
+
+          <td>
+            <form>
+                <div class="form-group">
+                  <label for="patientNationality">الجنسية</label>
+                  <center><input type="text" class="form-control" id="txtPatientNationality"></center>
+                </div>
+            </form>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <form>
+                <div class="form-group">
+                  <label for="patientAddress">العنوان</label>
+                  <center><input type="text" class="form-control" id="txtPatientAddress"></center>
+                </div>
+            </form>
+          </td>
+
+          <td class="blank_column"></td>
+
+          <td>
+            <form>
+                <div class="form-group">
+                  <label for="patientPhone">الهاتف</label>
+                  <center><input type="tel" class="form-control" id="telPatientPhone"></center>
+                </div>
+            </form>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <form>
+                <div class="form-group">
+                  <label for="patientNationalID">الرقم القومي</label>
+                  <center><input type="number" class="form-control" id="txtPatientNationalID"></center>
+                </div>
+            </form>
+          </td>
+
+          <td class="blank_column"></td>
+
+          <td>
+            <form>
+                <div class="form-group">
+                  <label for="patientMedicalID">الرقم الطبي</label>
+                  <center><input type="number" class="form-control" id="txtPatientMedicalID"></center>
+                </div>
+            </form>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <form>
+                <div class="form-group">
+                  <label for="patientEmergencyPersonName">اسم شخص في حالة الطوارئ</label>
+                  <center><input type="text" class="form-control" id="txtPatientEmergencyPersonName"></center>
+                </div>
+            </form>
+          </td>
+
+          <td class="blank_column"></td>
+
+          <td>
+            <form>
+                <div class="form-group">
+                  <label for="patientEmergencyPersonPhone">هاتف شخص في حالة الطوارئ</label>
+                  <center><input type="tel" class="form-control" id="telPatientEmergencyPersonPhone"></center>
+                </div>
+            </form>
+          </td>
+        </tr>
+      </table>
+      <center>
+        <button type="button" class="button btn-ok" id="btnSend">إرسال البيانات</button>
+        <button type="button" class="button btn-cancel" id="btnCancel">إلغاء</button>
+      </center>
+    </div>
+    <script src="./register_patient_info.js"></script>
+  </body>
+</html>
