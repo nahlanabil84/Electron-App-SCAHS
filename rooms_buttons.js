@@ -1,5 +1,5 @@
-const ipc = require('electron').ipcRenderer;
-const {ipcMain}=require('electron')
+const ipcRender = require('electron').ipcRenderer;
+const remote = require('electron')
 
 var room1Btn = document.getElementById('btnRoom1')
 var room2Btn = document.getElementById('btnRoom2')
@@ -35,26 +35,19 @@ room14Btn.addEventListener('click', changeBtn14State)
 room15Btn.addEventListener('click', changeBtn15State)
 room16Btn.addEventListener('click', changeBtn16State)
 
+ipcRender.on('message', (event, message) => {
+  if(message=='change-btn-1-color'){
+      room1Btn.classList.remove('btn-empty');
+      room1Btn.classList.add('btn-fill');}
+    })
 
 function changeBtn1State(){
-  ipc.sendSync('entry-accepted', 'newPatient')
-
-  ipcMain.on('entry-accepted', (event, arg) => {
-      if(arg=='patientAdded'){
-        room1Btn.classList.remove('btn-empty');
-        room1Btn.classList.add('btn-fill');
-      }})
-
-
-  // alert('Hello button 1')
-  //
-  // if (room1Btn.classList.contains('btn-empty')){
-  //   room1Btn.classList.remove('btn-empty');
-  //   room1Btn.classList.add('btn-fill');
-  // } else if(room1Btn.classList.contains('btn-fill')){
-  //   room1Btn.classList.remove('btn-fill');
-  //   room1Btn.classList.add('btn-empty');
-  // }
+  if (room1Btn.classList.contains('btn-empty')){
+    ipcRender.send('synchronous-message', 'newPatient')
+  } else if(room1Btn.classList.contains('btn-fill')){
+    room1Btn.classList.remove('btn-fill');
+    room1Btn.classList.add('btn-empty');
+  }
 }
 
 function changeBtn2State(){

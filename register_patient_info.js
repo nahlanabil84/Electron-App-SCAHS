@@ -23,9 +23,7 @@ function send(){
   //   alert('يجب إدخال كلمة المرور')
   // } else {
   //   if(txtUser==usr && txtPwd==pass){
-    //  ipc.sendSync('entry-accepted', 'sendRegister')
-      var window = remote.getCurrentWindow();
-      window.close();
+     ipc.send('asynchronous-message', 'sendRegister');
 
   //   }
   //   else{
@@ -37,12 +35,19 @@ function send(){
 function cancel(){
   //TODO show dialog to make sure no user to be added
     // if(txtUser==usr && txtPwd==pass){
-  //    ipc.sendSync('entry-accepted', 'cancelRegister')
-      var window = remote.getCurrentWindow();
-      window.close();
+     ipc.send('synchronous-message', 'cancelRegister');
 
     // }
     // else{
     //   alert('اسم المستخدم أو كلمة المرور غير صحيحتان')
     // }
 }
+
+ipc.on('asynchronous-reply', (event, arg) => {
+    if(arg=='patientAdded'){
+      //// TODO: send to rooms_buttons screen to change btn color
+      if (remote.getGlobal('mainRoomsWin')){
+        remote.getGlobal('mainRoomsWin').webContents.send ('message', 'change-btn-1-color');
+      }
+    }
+  })
