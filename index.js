@@ -43,8 +43,8 @@ function createWindows() {
       loginWin.hide()
     }
   });
- //registerPatientWin.openDevTools()
- // mainRoomsWin.openDevTools()
+ // registerPatientWin.openDevTools()
+ mainRoomsWin.openDevTools()
  // loginWin.openDevTools()
 }
 

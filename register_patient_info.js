@@ -1,69 +1,158 @@
 const ipc = require('electron').ipcRenderer;
 const remote = require('electron').remote;
 
+const { dialog } = require('electron').remote;
+
 const sendBtn = document.getElementById('btnSend');
 const cancelBtn = document.getElementById('btnCancel');
 
-let roomFlag
+let roomFlag = null, patientName = null, patientSex = null, patientBirthDate = null,
+patientNationality = null, patientAddress = null, patientPhone = null,
+patientNationalID = null, patientMedicalID = null, emergencyName = null,
+emergencyPhone = null
 
 sendBtn.addEventListener('click',send)
 cancelBtn.addEventListener('click',cancel)
 
 function send(){
-  switch (roomFlag) {
-    case 'addPatient-room1':
-    ipc.send('asynchronous-message', 'sendRegister');
-    break;
-    case 'addPatient-room2':
-    ipc.send('asynchronous-message', 'sendRegister-room2');
-    break;
-    case 'addPatient-room3':
-    ipc.send('asynchronous-message', 'sendRegister-room3');
-    break;
-    case 'addPatient-room4':
-    ipc.send('asynchronous-message', 'sendRegister-room4');
-    break;
-    case 'addPatient-room5':
-    ipc.send('asynchronous-message', 'sendRegister-room5');
-    break;
-    case 'addPatient-room6':
-    ipc.send('asynchronous-message', 'sendRegister-room6');
-    break;
-    case 'addPatient-room7':
-    ipc.send('asynchronous-message', 'sendRegister-room7');
-    break;
-    case 'addPatient-room8':
-    ipc.send('asynchronous-message', 'sendRegister-room8');
-    break;
-    case 'addPatient-room9':
-    ipc.send('asynchronous-message', 'sendRegister-room9');
-    break;
-    case 'addPatient-room10':
-    ipc.send('asynchronous-message', 'sendRegister-room10');
-    break;
-    case 'addPatient-room11':
-    ipc.send('asynchronous-message', 'sendRegister-room11');
-    break;
-    case 'addPatient-room12':
-    ipc.send('asynchronous-message', 'sendRegister-room12');
-    break;
-    case 'addPatient-room13':
-    ipc.send('asynchronous-message', 'sendRegister-room13');
-    break;
-    case 'addPatient-room14':
-    ipc.send('asynchronous-message', 'sendRegister-room14');
-    break;
-    case 'addPatient-room15':
-    ipc.send('asynchronous-message', 'sendRegister-room15');
-    break;
-    case 'addPatient-room16':
-    ipc.send('asynchronous-message', 'sendRegister-room16');
-    break;
+  if(checkInputs){
+
+    const options = {
+        type: 'question',
+        buttons: ['لا، مراجعة البيانات', 'نعم، ادخل البيانات'],
+        defaultId: 1,
+        title: 'سؤال',
+        message: 'هل أنت واثق من بيانات المريض؟ هل تريد تأكيد إدخال المريض؟',
+      };
+    dialog.showMessageBox(null, options, (response) => {
+      switch (response) {
+        case 0:           //no, close dialog and stay in screen
+           console.log(response);
+          break;
+        case 1:           //yes, send data
+          switch (roomFlag) {
+            case 'addPatient-room1':
+            ipc.send('asynchronous-message', 'sendRegister');
+            break;
+            case 'addPatient-room2':
+            ipc.send('asynchronous-message', 'sendRegister-room2');
+            break;
+            case 'addPatient-room3':
+            ipc.send('asynchronous-message', 'sendRegister-room3');
+            break;
+            case 'addPatient-room4':
+            ipc.send('asynchronous-message', 'sendRegister-room4');
+            break;
+            case 'addPatient-room5':
+            ipc.send('asynchronous-message', 'sendRegister-room5');
+            break;
+            case 'addPatient-room6':
+            ipc.send('asynchronous-message', 'sendRegister-room6');
+            break;
+            case 'addPatient-room7':
+            ipc.send('asynchronous-message', 'sendRegister-room7');
+            break;
+            case 'addPatient-room8':
+            ipc.send('asynchronous-message', 'sendRegister-room8');
+            break;
+            case 'addPatient-room9':
+            ipc.send('asynchronous-message', 'sendRegister-room9');
+            break;
+            case 'addPatient-room10':
+            ipc.send('asynchronous-message', 'sendRegister-room10');
+            break;
+            case 'addPatient-room11':
+            ipc.send('asynchronous-message', 'sendRegister-room11');
+            break;
+            case 'addPatient-room12':
+            ipc.send('asynchronous-message', 'sendRegister-room12');
+            break;
+            case 'addPatient-room13':
+            ipc.send('asynchronous-message', 'sendRegister-room13');
+            break;
+            case 'addPatient-room14':
+            ipc.send('asynchronous-message', 'sendRegister-room14');
+            break;
+            case 'addPatient-room15':
+            ipc.send('asynchronous-message', 'sendRegister-room15');
+            break;
+            case 'addPatient-room16':
+            ipc.send('asynchronous-message', 'sendRegister-room16');
+            break;
+        }
+        break;
+      }
+    });
+  } else{
+    // show dialog
+    const options = {
+        type: 'warning',
+        buttons: ['حسناً'],
+        defaultId: 0,
+        title: 'تحذير',
+        message: 'راجع البيانات، بعض الخانات فارغة',
+      };
+
+      dialog.showMessageBox(null, options, (response) => {
+        switch (response) {
+          case 0:
+            console.log(response);
+            break;
+        }
+      });
+    // alert('راجع الخانات لا يمكن ترك إحداها فارغة')
   }
 }
 
 function cancel(){
-  ipc.send('synchronous-message', 'cancelRegister');
+  if(checkInputs){
+    const options = {
+        type: 'question',
+        buttons: ['لا، استمر', 'نعم، إلغاء'],
+        defaultId: 1,
+        title: 'سؤال',
+        message: 'هل تريد إلغاء إضافة المريض؟',
+        detail: 'إذا قمت إلغاء إضافة المريض سيتم حذف البيانات المدخلة مسبقاً',
+      };
+
+      dialog.showMessageBox(null, options, (response) => {
+        switch (response) {
+          case 0:         //no stay in screen
+            console.log(response);
+            break;
+          case 1:         //yes, exit screen
+            ipc.send('synchronous-message', 'cancelRegister');
+            break;
+          default:
+
+        }
+      });
+  } else{
+    ipc.send('synchronous-message', 'cancelRegister');
+  }
+}
+
+function checkInputs(){
+  patientName = document.getElementById('txtPatientName').value;
+  patientSex = document.getElementById('patientSexSelect').value;
+  patientBirthDate = document.getElementById('datePatientBirthDate').value;
+  patientNationality = document.getElementById('txtPatientNationality').value;
+  patientAddress = document.getElementById('txtPatientAddress').value;
+  patientPhone = document.getElementById('telPatientPhone').value;
+  patientNationalID = document.getElementById('txtPatientNationalID').value;
+  patientMedicalID = document.getElementById('txtPatientMedicalID').value;
+  emergencyName = document.getElementById('txtPatientEmergencyPersonName').value;
+  emergencyPhone = document.getElementById('telPatientEmergencyPersonPhone').value;
+
+  if(patientName != '' && patientSex != '' && patientBirthDate != '' &&
+  patientNationality != '' && patientAddress != '' && patientPhone != ''
+&& patientNationalID != '' && patientMedicalID != '' && emergencyName != ''
+&& emergencyPhone != ''){
+
+  return true
+  } else{
+    return false
+  }
 }
 
 ipc.on('asynchronous-reply', (event, arg) => {
